@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Empire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>CROWN EMPIRE</h1>
+        <p>Power. Presence. Precision.</p>
+    </header>
+
+    <section class="intro">
+        <h2>Welcome to the Domain</h2>
+        <p>
+            You have entered the digital stronghold of Crown.  
+            A place built for influence, identity, and absolute control over your world.
+        </p>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>⚡ Speed</h3>
+            <p>Optimized, lightweight, and built to expand into anything you want.</p>
+        </div>
+        <div class="card">
+            <h3>🛡 Authority</h3>
+            <p>Your brand, your rules, your presence — unmistakable and absolute.</p>
+        </div>
+        <div class="card">
+            <h3>🌐 Expansion</h3>
+            <p>Designed to grow into bots, APIs, dashboards, or entire empires.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Crown Empire. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
