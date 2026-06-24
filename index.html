@@ -7,36 +7,75 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="bg-glow"></div>
+
     <header>
-        <h1>CROWN EMPIRE</h1>
-        <p>Power. Presence. Precision.</p>
+        <div class="logo">CROWN EMPIRE</div>
+        <nav>
+            <button class="nav-btn" data-target="intro">Lore</button>
+            <button class="nav-btn" data-target="dashboard">Dashboard</button>
+            <button class="nav-btn" data-target="universe">Universe</button>
+        </nav>
+        <button id="loginBtn" class="login-btn">Login</button>
     </header>
 
-    <section class="intro">
-        <h2>Welcome to the Domain</h2>
-        <p>
-            You have entered the digital stronghold of Crown.  
-            A place built for influence, identity, and absolute control over your world.
-        </p>
-    </section>
+    <main>
+        <section id="intro" class="section active">
+            <h1 class="hero-title">Welcome to the Domain</h1>
+            <p class="hero-sub">
+                The Crown Empire is a growing digital stronghold—bots, worlds, and systems orbiting one name: yours.
+            </p>
+            <button class="primary-btn" data-target="dashboard">Enter Control Panel</button>
+        </section>
 
-    <section class="features">
-        <div class="card">
-            <h3>⚡ Speed</h3>
-            <p>Optimized, lightweight, and built to expand into anything you want.</p>
-        </div>
-        <div class="card">
-            <h3>🛡 Authority</h3>
-            <p>Your brand, your rules, your presence — unmistakable and absolute.</p>
-        </div>
-        <div class="card">
-            <h3>🌐 Expansion</h3>
-            <p>Designed to grow into bots, APIs, dashboards, or entire empires.</p>
-        </div>
-    </section>
+        <section id="dashboard" class="section">
+            <h2>Empire Dashboard</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Bot Status</h3>
+                    <p id="botStatus">Disconnected</p>
+                    <button id="pingBotBtn" class="secondary-btn">Ping Bot API</button>
+                </div>
+                <div class="card">
+                    <h3>Active Realms</h3>
+                    <p>Bloxdhub, BloxdForge, Discord Core</p>
+                </div>
+                <div class="card">
+                    <h3>Influence Level</h3>
+                    <p>Rising. Systems online. Presence expanding.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="universe" class="section">
+            <h2>Crown Empire Universe</h2>
+            <p>
+                This is the lore layer—where your worlds, servers, and bots connect into one mythology.
+            </p>
+            <ul class="universe-list">
+                <li><strong>Bloxdhub:</strong> Public front—community, mods, and events.</li>
+                <li><strong>BloxdForge:</strong> Forge of worlds—textures, scripts, tools.</li>
+                <li><strong>Discord Core:</strong> Command center—bots, logs, and hierarchy.</li>
+            </ul>
+        </section>
+    </main>
 
     <footer>
         <p>© 2026 Crown Empire. All Rights Reserved.</p>
     </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Access Crown Core</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button id="submitLogin" class="primary-btn">Login</button>
+            <button id="closeLogin" class="secondary-btn">Close</button>
+            <p id="loginMessage" class="login-message"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
