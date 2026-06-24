@@ -1,12 +1,13 @@
 // Section navigation
 const navButtons = document.querySelectorAll('.nav-btn');
 const sections = document.querySelectorAll('.section');
-const heroButtons = document.querySelectorAll('.primary-btn');
+const heroButtons = document.querySelectorAll('.primary-btn, .secondary-btn');
 
 function showSection(id) {
     sections.forEach(sec => {
         sec.classList.toggle('active', sec.id === id);
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 navButtons.forEach(btn => {
@@ -43,7 +44,7 @@ submitLogin.addEventListener('click', () => {
     const user = document.getElementById('username').value.trim();
     const pass = document.getElementById('password').value.trim();
 
-    // Placeholder logic – replace with real auth later
+    // Placeholder logic – swap with real auth later
     if (user && pass) {
         loginMessage.textContent = `Access granted, ${user}.`;
         showSection('dashboard');
@@ -61,12 +62,12 @@ pingBotBtn.addEventListener('click', async () => {
     botStatus.textContent = 'Pinging...';
 
     try {
-        // Replace this URL with your real bot API endpoint later
+        // Replace with your real bot API endpoint when ready:
         // const res = await fetch('https://your-bot-api.example.com/status');
         // const data = await res.json();
         // botStatus.textContent = data.online ? 'Online' : 'Offline';
 
-        // For now, fake it:
+        // Simulated response for now:
         setTimeout(() => {
             botStatus.textContent = 'Online (simulated)';
         }, 700);
