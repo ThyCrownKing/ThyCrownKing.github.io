@@ -1,118 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crown Empire</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Crown Empire</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="bg-glow"></div>
-    <div class="bg-grid"></div>
+  <header>
+    <h1>👑 Crown Empire</h1>
+  </header>
 
-    <header>
-        <div class="logo">CROWN EMPIRE</div>
-        <nav>
-            <button class="nav-btn" data-target="intro">Lore</button>
-            <button class="nav-btn" data-target="dashboard">Dashboard</button>
-            <button class="nav-btn" data-target="universe">Universe</button>
-        </nav>
-        <button id="loginBtn" class="login-btn">Access Core</button>
-    </header>
+  <main>
+    <section class="hero">
+      <h2>Welcome to the Crown Empire</h2>
+      <p>Your unified control center for your Discord bot and admin tools.</p>
 
-    <main>
-        <section id="intro" class="section active">
-            <div class="hero">
-                <div class="hero-text">
-                    <h1 class="hero-title">The Crown Controls the Grid.</h1>
-                    <p class="hero-sub">
-                        A unified digital empire: Bloxd realms, Discord infrastructure, and systems orbiting one identity—Crown.
-                    </p>
-                    <div class="hero-actions">
-                        <button class="primary-btn" data-target="dashboard">Enter Control Panel</button>
-                        <button class="secondary-btn" data-target="universe">View Lore</button>
-                    </div>
-                </div>
-                <div class="hero-orbit">
-                    <div class="orbit-ring"></div>
-                    <div class="orbit-core"></div>
-                    <div class="orbit-node orbit-node-1"></div>
-                    <div class="orbit-node orbit-node-2"></div>
-                    <div class="orbit-node orbit-node-3"></div>
-                </div>
-            </div>
-        </section>
+      <div class="buttons">
+        <a class="btn" href="https://discordbotv3-production.up.railway.app/auth/login">
+          Login to Admin Panel
+        </a>
 
-        <section id="dashboard" class="section">
-            <h2>Empire Dashboard</h2>
-            <p class="section-sub">
-                High‑level status of your systems. This is the shell for future live data from your bots and services.
-            </p>
-            <div class="cards">
-                <div class="card">
-                    <h3>Bot Status</h3>
-                    <p id="botStatus">Disconnected</p>
-                    <button id="pingBotBtn" class="secondary-btn">Ping Bot API</button>
-                </div>
-                <div class="card">
-                    <h3>Active Realms</h3>
-                    <ul class="mini-list">
-                        <li>Bloxdhub – Community front</li>
-                        <li>BloxdForge – Tools & textures</li>
-                        <li>Discord Core – Command center</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Influence Level</h3>
-                    <p>Rising. Systems online. Presence expanding.</p>
-                </div>
-            </div>
-        </section>
+        <a class="btn secondary" href="/admin">
+          Open Admin Panel
+        </a>
+      </div>
+    </section>
+  </main>
 
-        <section id="universe" class="section">
-            <h2>Crown Empire Universe</h2>
-            <p class="section-sub">
-                The mythology layer—how your projects connect into one narrative instead of random separate things.
-            </p>
-            <div class="universe-grid">
-                <div class="universe-card">
-                    <h3>Bloxdhub</h3>
-                    <p>
-                        Public hub. Forums, mods, events, and announcements. The place where the crowd sees the Crown.
-                    </p>
-                </div>
-                <div class="universe-card">
-                    <h3>BloxdForge</h3>
-                    <p>
-                        Forge of worlds. Texture packs, scripts, and tools that shape how Bloxd realms look and behave.
-                    </p>
-                </div>
-                <div class="universe-card">
-                    <h3>Discord Core</h3>
-                    <p>
-                        The command center. Bots, logs, permissions, and hierarchy—your invisible infrastructure of control.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2026 Crown Empire. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Access Crown Core</h2>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button id="submitLogin" class="primary-btn">Login</button>
-            <button id="closeLogin" class="secondary-btn">Close</button>
-            <p id="loginMessage" class="login-message"></p>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
