@@ -52,3 +52,9 @@ main {
 .btn.secondary:hover {
   background: #374151;
 }
+
+.card input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
