@@ -1,4 +1,4 @@
-const API_BASE = "https://your-railway-api-url-here"; // change to your FastAPI URL
+const API_BASE = "https://YOUR-RAILWAY-URL"; // replace with your FastAPI base URL
 
 let jwtToken = null;
 let apiKey = null;
@@ -38,10 +38,7 @@ async function fetchJSON(path, options = {}) {
     ...options,
     headers: { ...headers(), ...(options.headers || {}) }
   });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || res.statusText);
-  }
+  if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
 
