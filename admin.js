@@ -1,4 +1,5 @@
-const API_BASE = "https://YOUR-RAILWAY-URL"; // replace with your FastAPI base URL
+const API_BASE = "https://discordbotv3-production.up.railway.app
+"; // replace with your FastAPI base URL
 
 let jwtToken = null;
 let apiKey = null;
