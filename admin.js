@@ -199,6 +199,33 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("lockBtn").onclick = lockServer;
   document.getElementById("unlockBtn").onclick = unlockServer;
   document.getElementById("voiceRefresh").onclick = loadVoiceStatus;
+document.getElementById("warnBtn").onclick = warnUser;
+document.getElementById("blacklistBtn").onclick = blacklistUser;
 
   if (jwtToken && apiKey) loadGuilds();
 });
+// --- Moderation: Warn ---
+async function warnUser() {
+  const user_id = document.getElementById("warnUserId").value.trim();
+  const reason = document.getElementById("warnReason").value.trim() || "No reason provided";
+
+  const res = await fetchJSON(`/admin/guilds/${currentGuildId}/moderation/warn`, {
+    method: "POST",
+    body: JSON.stringify({ user_id, reason })
+  });
+
+  document.getElementById("warnResult").textContent = "User warned successfully.";
+}
+
+// --- Moderation: Blacklist ---
+async function blacklistUser() {
+  const user_id = document.getElementById("blacklistUserId").value.trim();
+  const reason = document.getElementById("blacklistReason").value.trim() || "No reason provided";
+
+  const res = await fetchJSON(`/admin/guilds/${currentGuildId}/moderation/blacklist`, {
+    method: "POST",
+    body: JSON.stringify({ user_id, reason })
+  });
+
+  document.getElementById("blacklistResult").textContent = "User blacklisted successfully.";
+}
