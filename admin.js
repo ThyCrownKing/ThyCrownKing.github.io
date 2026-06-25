@@ -1,21 +1,27 @@
-const API_BASE = "https://discordbotv3-production.up.railway.app
-"; // replace with your FastAPI base URL
+const API_BASE = "https://discordbotv3-production.up.railway.app";
 
 let jwtToken = null;
 let apiKey = null;
 let currentGuildId = null;
 
+// --- Page switching ---
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+// --- Token handling ---
 function readTokenFromHash() {
-  const hash = window.location.hash || "";
-  const match = hash.match(/token=([^&]+)/);
-  if (match) {
-    jwtToken = match[1];
+  const hash = window.location.hash;
+  if (hash.includes("token=")) {
+    jwtToken = hash.split("token=")[1];
     localStorage.setItem("admin_jwt", jwtToken);
   } else {
     jwtToken = localStorage.getItem("admin_jwt");
   }
 }
 
+// --- API Key ---
 function loadApiKey() {
   apiKey = localStorage.getItem("admin_api_key") || "";
   document.getElementById("apiKey").value = apiKey;
@@ -26,6 +32,7 @@ function saveApiKey() {
   localStorage.setItem("admin_api_key", apiKey);
 }
 
+// --- Headers ---
 function headers() {
   return {
     "Content-Type": "application/json",
@@ -34,6 +41,7 @@ function headers() {
   };
 }
 
+// --- Fetch helper ---
 async function fetchJSON(path, options = {}) {
   const res = await fetch(API_BASE + path, {
     ...options,
@@ -43,38 +51,39 @@ async function fetchJSON(path, options = {}) {
   return res.json();
 }
 
+// --- Guilds ---
 async function loadGuilds() {
   try {
     const data = await fetchJSON("/admin/guilds");
     const select = document.getElementById("guildSelect");
     select.innerHTML = "";
+
     data.guilds.forEach(g => {
       const opt = document.createElement("option");
       opt.value = g.id;
       opt.textContent = `${g.name} (${g.member_count})`;
       select.appendChild(opt);
     });
+
     if (data.guilds.length) {
       currentGuildId = data.guilds[0].id;
       select.value = currentGuildId;
       await loadGuildInfo();
       await loadAutomod();
     }
-    document.getElementById("status").textContent = "Connected";
   } catch (e) {
-    document.getElementById("status").textContent = "Error: " + e.message;
+    console.error(e);
   }
 }
 
 async function loadGuildInfo() {
-  if (!currentGuildId) return;
   const info = await fetchJSON(`/admin/guilds/${currentGuildId}/stats`);
   document.getElementById("guildInfo").textContent =
     `Name: ${info.name} | Members: ${info.member_count} | Roles: ${info.roles} | Channels: ${info.channels}`;
 }
 
+// --- Automod ---
 async function loadAutomod() {
-  if (!currentGuildId) return;
   const data = await fetchJSON(`/admin/guilds/${currentGuildId}/automod`);
   const container = document.getElementById("automodForm");
   container.innerHTML = "";
@@ -93,22 +102,16 @@ async function loadAutomod() {
     cb.type = "checkbox";
     cb.checked = !!data[key];
     cb.dataset.key = key;
-    const span = document.createElement("span");
-    span.textContent = " " + label;
     row.appendChild(cb);
-    row.appendChild(span);
+    row.appendChild(document.createTextNode(" " + label));
     container.appendChild(row);
   });
 
   const raidRow = document.createElement("div");
-  const raidLabel = document.createElement("span");
-  raidLabel.textContent = "Raid Threshold: ";
-  const raidInput = document.createElement("input");
-  raidInput.type = "number";
-  raidInput.value = data.raid_threshold;
-  raidInput.id = "raidThresholdInput";
-  raidRow.appendChild(raidLabel);
-  raidRow.appendChild(raidInput);
+  raidRow.innerHTML = `
+    Raid Threshold:
+    <input type="number" id="raidThresholdInput" value="${data.raid_threshold}">
+  `;
   container.appendChild(raidRow);
 
   const saveBtn = document.createElement("button");
@@ -118,14 +121,11 @@ async function loadAutomod() {
 }
 
 async function saveAutomod() {
-  if (!currentGuildId) return;
-  const container = document.getElementById("automodForm");
   const payload = {};
-  container.querySelectorAll("input[type=checkbox]").forEach(cb => {
+  document.querySelectorAll("#automodForm input[type=checkbox]").forEach(cb => {
     payload[cb.dataset.key] = cb.checked ? 1 : 0;
   });
-  const raidInput = document.getElementById("raidThresholdInput");
-  payload.raid_threshold = parseInt(raidInput.value || "8", 10);
+  payload.raid_threshold = parseInt(document.getElementById("raidThresholdInput").value);
 
   await fetchJSON(`/admin/guilds/${currentGuildId}/automod`, {
     method: "POST",
@@ -133,8 +133,8 @@ async function saveAutomod() {
   });
 }
 
+// --- Lockdown ---
 async function lockServer() {
-  if (!currentGuildId) return;
   const reason = document.getElementById("lockReason").value || "Admin Panel Lockdown";
   const res = await fetchJSON(`/admin/guilds/${currentGuildId}/lock`, {
     method: "POST",
@@ -145,7 +145,6 @@ async function lockServer() {
 }
 
 async function unlockServer() {
-  if (!currentGuildId) return;
   const res = await fetchJSON(`/admin/guilds/${currentGuildId}/unlock`, {
     method: "POST",
     body: JSON.stringify({})
@@ -154,17 +153,17 @@ async function unlockServer() {
     `Unlocked ${res.channels_restored} channels.`;
 }
 
+// --- Voice ---
 async function loadVoiceStatus() {
-  if (!currentGuildId) return;
   const data = await fetchJSON(`/admin/guilds/${currentGuildId}/voice/status`);
   const container = document.getElementById("voiceStatus");
   container.innerHTML = "";
+
   data.channels.forEach(ch => {
     const div = document.createElement("div");
-    const title = document.createElement("strong");
-    title.textContent = `${ch.name} (${ch.members.length} members)`;
-    div.appendChild(title);
-    const list = document.createElement("ul");
+    div.innerHTML = `<strong>${ch.name} (${ch.members.length})</strong>`;
+    const ul = document.createElement("ul");
+
     ch.members.forEach(m => {
       const li = document.createElement("li");
       const icons = [];
@@ -172,13 +171,15 @@ async function loadVoiceStatus() {
       if (m.status.includes("deaf")) icons.push("🔕");
       if (m.status.includes("stream")) icons.push("📺");
       li.textContent = `${m.name} ${icons.join(" ")}`;
-      list.appendChild(li);
+      ul.appendChild(li);
     });
-    div.appendChild(list);
+
+    div.appendChild(ul);
     container.appendChild(div);
   });
 }
 
+// --- Init ---
 document.addEventListener("DOMContentLoaded", () => {
   readTokenFromHash();
   loadApiKey();
@@ -189,20 +190,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById("refreshGuilds").onclick = loadGuilds;
-
-  document.getElementById("guildSelect").onchange = async (e) => {
+  document.getElementById("guildSelect").onchange = e => {
     currentGuildId = e.target.value;
-    await loadGuildInfo();
-    await loadAutomod();
+    loadGuildInfo();
+    loadAutomod();
   };
 
   document.getElementById("lockBtn").onclick = lockServer;
   document.getElementById("unlockBtn").onclick = unlockServer;
   document.getElementById("voiceRefresh").onclick = loadVoiceStatus;
 
-  if (jwtToken && apiKey) {
-    loadGuilds();
-  } else {
-    document.getElementById("status").textContent = "Waiting for token/API key";
-  }
+  if (jwtToken && apiKey) loadGuilds();
 });
