@@ -6,6 +6,6 @@
     localStorage.setItem("admin_jwt", token);
 
     // Clean URL and redirect to admin panel
-    window.location.href = "/admin";
+    window.location.href = "admin.html";
   }
 })();

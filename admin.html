@@ -9,57 +9,90 @@
 
   <aside class="sidebar">
     <h2>👑 Admin</h2>
-    <button class="nav-btn" onclick="showPage('dashboard')">Dashboard</button>
-    <button class="nav-btn" onclick="showPage('automod')">Automod</button>
-    <button class="nav-btn" onclick="showPage('lockdown')">Lockdown</button>
-    <button class="nav-btn" onclick="showPage('voice')">Voice Status</button>
-    <button class="nav-btn" onclick="window.location.href='/'">← Back Home</button>
+    <button class="nav-btn active" data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="nav-btn" data-page="automod" onclick="showPage('automod')">Automod</button>
+    <button class="nav-btn" data-page="lockdown" onclick="showPage('lockdown')">Lockdown</button>
+    <button class="nav-btn" data-page="voice" onclick="showPage('voice')">Voice Status</button>
+    <button class="nav-btn" data-page="moderation" onclick="showPage('moderation')">Moderation</button>
+    <button class="nav-btn secondary" onclick="window.location.href='/'">← Back Home</button>
   </aside>
 
   <main class="admin-main">
 
-    <!-- Connection -->
     <section id="dashboard" class="page active">
       <h1>Dashboard</h1>
 
       <div class="card">
         <h2>Connection</h2>
-        <label>API Key:</label>
-        <input id="apiKey" type="password" placeholder="API_SECRET">
-        <button id="saveApiKey">Save</button>
-        <p>JWT auto-loaded from <code>#token=...</code></p>
+        <p>Enter your bot API endpoint and your JWT token to connect this dashboard to your bot backend.</p>
+        <label>API Base URL</label>
+        <input id="apiBase" type="text" placeholder="https://example.com">
+        <label>JWT Token</label>
+        <input id="tokenInput" type="password" placeholder="Paste token here">
+        <label>API Key (optional)</label>
+        <input id="apiKey" type="password" placeholder="Optional API key">
+        <button id="saveSettings">Save and Load</button>
+        <div id="connectionStatus" class="status"></div>
       </div>
 
       <div class="card">
         <h2>Guilds</h2>
-        <select id="guildSelect"></select>
-        <button id="refreshGuilds">Refresh</button>
-        <div id="guildInfo"></div>
+        <div class="form-row">
+          <select id="guildSelect"></select>
+          <button id="refreshGuilds">Refresh</button>
+        </div>
+        <div id="guildInfo" class="status"></div>
       </div>
     </section>
 
-    <!-- Automod -->
     <section id="automod" class="page">
       <h1>Automod Settings</h1>
       <div class="card" id="automodForm"></div>
     </section>
 
-    <!-- Lockdown -->
     <section id="lockdown" class="page">
       <h1>Lockdown Controls</h1>
       <div class="card">
+        <label>Lockdown reason</label>
         <input id="lockReason" placeholder="Reason">
-        <button class="danger" id="lockBtn">Lock Server</button>
-        <button id="unlockBtn">Unlock Server</button>
-        <div id="lockResult"></div>
+        <div class="form-row">
+          <button class="danger" id="lockBtn">Lock Server</button>
+          <button id="unlockBtn">Unlock Server</button>
+        </div>
+        <div id="lockResult" class="status"></div>
       </div>
     </section>
 
-    <!-- Voice -->
     <section id="voice" class="page">
       <h1>Voice Status</h1>
-      <button id="voiceRefresh">Refresh</button>
-      <div id="voiceStatus" class="card"></div>
+      <div class="card">
+        <button id="voiceRefresh">Refresh</button>
+        <div id="voiceStatus" class="status"></div>
+      </div>
+    </section>
+
+    <section id="moderation" class="page">
+      <h1>Moderation Tools</h1>
+
+      <div class="card">
+        <h2>Warn User</h2>
+        <label>User ID</label>
+        <input id="warnUserId" placeholder="User ID">
+        <label>Reason</label>
+        <input id="warnReason" placeholder="Reason">
+        <button id="warnBtn">Warn User</button>
+        <div id="warnResult" class="status"></div>
+      </div>
+
+      <div class="card">
+        <h2>Blacklist User</h2>
+        <label>User ID</label>
+        <input id="blacklistUserId" placeholder="User ID">
+        <label>Reason</label>
+        <input id="blacklistReason" placeholder="Reason">
+        <button id="blacklistBtn">Blacklist User</button>
+        <div id="blacklistResult" class="status"></div>
+      </div>
     </section>
 
   </main>
@@ -67,26 +100,3 @@
   <script src="admin.js"></script>
 </body>
 </html>
-
-<!-- Moderation -->
-<section id="moderation" class="page">
-  <h1>Moderation Tools</h1>
-
-  <div class="card">
-    <h2>Warn User</h2>
-    <input id="warnUserId" placeholder="User ID">
-    <input id="warnReason" placeholder="Reason">
-    <button id="warnBtn">Warn User</button>
-    <div id="warnResult"></div>
-  </div>
-
-  <div class="card">
-    <h2>Blacklist User</h2>
-    <input id="blacklistUserId" placeholder="User ID">
-    <input id="blacklistReason" placeholder="Reason">
-    <button id="blacklistBtn">Blacklist User</button>
-    <div id="blacklistResult"></div>
-  </div>
-</section>
-
-<button class="nav-btn" onclick="showPage('moderation')">Moderation</button>
