@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE = "";
+const DEFAULT_API_BASE = "https://discordbotv5-production.up.railway.app";
 let API_BASE = DEFAULT_API_BASE;
 let jwtToken = null;
 let apiKey = null;
@@ -80,7 +80,12 @@ function headers() {
 }
 
 function normalizeBase(url) {
-  return url.replace(/\/+$/, "");
+  let normalized = (url || "").trim();
+  if (!normalized) return "";
+  if (!/^https?:\/\//i.test(normalized)) {
+    normalized = `https://${normalized}`;
+  }
+  return normalized.replace(/\/+$/, "");
 }
 
 async function fetchJSON(path, options = {}) {
